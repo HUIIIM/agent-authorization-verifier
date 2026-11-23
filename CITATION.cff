@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "agent-authorization-verifier"
+abstract: >-
+  Verification core for WIMSE workload-to-workload HTTP message signatures
+  (draft-ietf-wimse-http-signature-09): a library and CLI producing
+  two-layer judgments (artifact verdict plus twelve-stage failure
+  classification) aligned with the WIMSE HTTP signature test vector suite.
+authors:
+  - family-names: "Miao"
+    given-names: "Jiahui"
+version: "0.1.0"
+date-released: "2026-11-23"
+license: MIT
+repository-code: "https://github.com/HUIIIM/agent-authorization-verifier"
+keywords:
+  - wimse
+  - http-signatures
+  - workload-identity
+  - verification
+references:
+  - type: standard
+    title: "WIMSE Workload-to-Workload Authentication with HTTP Signatures"
+    year: 2026
+    notes: "draft-ietf-wimse-http-signature-09, IETF WIMSE Working Group"
+  - type: dataset
+    title: "Test Vectors for the WIMSE S2S Protocol HTTP Signature Scheme"
+    year: 2026
+    doi: "10.5281/zenodo.24203971"
+    notes: "Vector set v4, CC-BY-4.0; the suite this verifier is tested against"

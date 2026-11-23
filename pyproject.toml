@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-authorization-verifier"
+version = "0.1.0"
+description = "Verification core for WIMSE workload-to-workload HTTP message signatures (draft-ietf-wimse-http-signature-09): library and CLI producing two-layer judgments aligned with the WIMSE HTTP signature test vector suite."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Jiahui Miao" },
+]
+requires-python = ">=3.11"
+dependencies = [
+    "cryptography>=42",
+]
+keywords = ["wimse", "http-signatures", "workload-identity", "verification"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security :: Cryptography",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+aav = "agent_auth_verifier.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/HUIIIM/agent-authorization-verifier"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
