@@ -45,10 +45,10 @@ verifier = Verifier(
     )
 )
 judgment = verifier.verify(raw_http_message, verify_time=1795000060)
-judgment.verdict        # "ACCEPT" / "REJECT" / "CLIENT_REJECT"
+judgment.verdict  # "ACCEPT" / "REJECT" / "CLIENT_REJECT"
 judgment.failing_stage  # e.g. "COVERAGE" (None when accepted)
-judgment.failing_code   # e.g. "E_COVERAGE_MISSING"
-judgment.to_dict()      # machine-readable form of both layers
+judgment.failing_code  # e.g. "E_COVERAGE_MISSING"
+judgment.to_dict()  # machine-readable form of both layers
 ```
 
 **CLI** (same core, no network access at runtime):
