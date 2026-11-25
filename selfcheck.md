@@ -61,7 +61,7 @@ criterion (see the cascade note below).
 | N-06 | REJECT PARAMS/E_PARAM_FORBIDDEN | same | match |
 | N-07 | REJECT PARAMS/E_PARAM_FORBIDDEN | same | match |
 | N-08 | REJECT SELECT/E_TAG_AMBIGUOUS | same | match |
-| N-09 | REJECT WINDOW/E_WINDOW_OUTSIDE | REJECT WIT/E_WIT_EXPIRED, cascade [WINDOW] | **divergence (attribution only)** |
+| N-09 | REJECT WINDOW/E_WINDOW_OUTSIDE | REJECT WIT/E_WIT_EXP, cascade [WINDOW] | **divergence (attribution only)** |
 | N-09b | ACCEPT at T0+300; REJECT WINDOW/E_WINDOW_OUTSIDE at T0+301 | same, both legs | match |
 | N-10 | REJECT AUD/E_AUD_MISMATCH | same | match |
 | N-11 | REJECT PARAMS/E_PARAM_MISSING | same | match |
@@ -88,7 +88,7 @@ N-09 verifies P-01's message at T0+3600 and expects attribution to
 WINDOW. At that instant, WIT-A is also expired -- its exp is exactly
 T0+3600, and a JWT MUST NOT be accepted at or after exp. This verifier
 validates the WIT before the message signature, as the draft mandates in
-both -08 and -09, so it attributes the failure to WIT/E_WIT_EXPIRED and
+both -08 and -09, so it attributes the failure to WIT/E_WIT_EXP and
 reports WINDOW as a cascade. The verdict (REJECT) agrees with the suite.
 
 This is a confound the suite itself records in N-09's anchor: "at that
@@ -186,3 +186,64 @@ an underivable base reach ACCEPT with CRYPTO never run. Consequence for the
 cascade notes above: N-02 and N-21 now also report BASE as a cascade (their
 CONNECT `@path` cannot be derived); primary stage and code are unchanged
 for every vector.
+
+## W3: WIT and contrast engine delta (2026-11-25)
+
+Scope: WIT pre-checks per design §3.2, the contrast engine (design §2.5/§3.4),
+and vectors/v4/ with the N-09b incremental entry. Out of scope: W4 report/CLI,
+W5 self-check, W6 probe execution, W7 README/CI gate.
+
+U3 gate (first step of the wave): the current draft was read in full and
+aligned item-by-item with the design §3.2 WIT row; the verbatim record, the
+alignment table and the difference list are in docs/w3-wit-u3.md. The draft
+read is draft-ietf-wimse-workload-creds-03 (30 Oct 2026); it has no §5.1.4 --
+the validation procedure is §5.1.3 "Validating the WIT". Differences D1-D5
+(section pointer; exp comparison; anchor selection by sub trust domain;
+malformed tokens; error reporting) are registered only, pending household
+decision, and are NOT implemented.
+
+WIT module (src/agent_auth_verifier/wit.py): check order sig -> typ -> exp ->
+cnf; failure codes E_WIT_SIG / E_WIT_TYPE / E_WIT_EXP / E_WIT_CNF only (design
+§3.2). Renames from the earlier draft codes: E_WIT_SIGNATURE -> E_WIT_SIG,
+E_WIT_EXPIRED -> E_WIT_EXP. The typ check was added; the iat check was removed
+(neither the design row nor draft §5.1.3 mentions iat). Malformed or
+unparseable tokens fail as E_WIT_SIG. wit_steps() returns the sub-steps
+1 (issuer signature), 1b (cnf binding), 1c (WIT not expired), each evaluated
+independently.
+
+Contrast engine (src/agent_auth_verifier/contrast.py): run_contrast() runs the
+full stage chain independently per evaluation (no stage results cached across
+evaluations) and compares each leg against its own expect; an item passes iff
+every leg matches and no CONTRAST_ANOMALY is raised. Step mapping: 1/1b/1c ->
+WIT, 2 -> CRYPTO, 3 -> PARAMS+COVERAGE, 4 -> AUD, 5 -> WINDOW.
+
+N-09b (vectors/v4/n-09b.json, catalog vectors/v4/catalog.json): message
+byte-identical to P-01; the only variation is the verify time. Leg 1
+(T0+300, window right edge, closed interval) ACCEPT; leg 2 (T0+301) REJECT 400
++ wimse-signature-invalid, failing stage WINDOW / E_WINDOW_OUTSIDE, cascades
+empty (WIT exp T0+3600, so the rejection is solely the signature window).
+The stepwise table matches the source §2.2 table cell by cell. Negative count
+22 -> 23; judged set 29.
+
+Acceptance evidence (tests/test_w3_contrast.py, 15 tests):
+- N-09b two legs and the stepwise table: test_n09b_stepwise_table_matches_source,
+  test_n09b_contrast_block_matches_engine.
+- N-09 / N-20 probe-message construction: test_n09_probe_construction_matches_formula,
+  test_n20_probe_construction_matches_formula (N-20 expect failing_code is
+  E_PROCESS_ORDER, as the fixture states it).
+- CONTRAST_ANOMALY injection self-test: test_contrast_anomaly_injection (one
+  leg's time moved past the WIT exp so the invariant stages diverge -> the
+  anomaly is raised; a WIT-expiry-only divergence raises none).
+
+Stage vocabulary (observed, not assumed): after a hard stage failure the
+downstream stages are recorded "blocked"; a stage that does not apply to the
+message is "skip" (e.g. DIGEST when there is no Content-Digest). SELECT runs
+before the WIT check -- it only picks signature parameters from parseable
+headers, so it passes even when the WIT is expired.
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Unit + suite tests | `python -m pytest -q` | **115 passed, 0 failed** (baseline 100 + 15 new) |
+| Lint | `ruff check` | **clean (no findings)** |
+| Format | `ruff format --check` | **25 files, all formatted** |
+| Suite run (CLI) | `python -m agent_auth_verifier.cli run-vectors --set tests/fixtures/vectors.json` | 22 matched, 1 mismatched, 6 not judgeable; exit 1 (see N-09); N-09b MATCH |

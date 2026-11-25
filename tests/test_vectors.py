@@ -57,7 +57,7 @@ def test_n09_documented_divergence(vector_set: VectorSet, outcomes: dict) -> Non
     actual = evaluation["actual"]
     assert actual["verdict"] == "REJECT"
     assert actual["failing_stage"] == "WIT"
-    assert actual["failing_code"] == "E_WIT_EXPIRED"
+    assert actual["failing_code"] == "E_WIT_EXP"
     assert actual["cascades"] == ["WINDOW"]
 
 

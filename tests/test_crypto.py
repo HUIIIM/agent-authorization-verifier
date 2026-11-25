@@ -78,7 +78,7 @@ def test_wit_expired_at_exp_instant(vector_set: VectorSet) -> None:
     anchor = vector_set.materials["trusted_config"]["issuer_anchor_jwk"]
     with pytest.raises(WitError) as excinfo:
         validate_wit(vector_set.materials["wits"]["WIT-A"]["jws"], anchor, T0 + 3600)
-    assert excinfo.value.code == "E_WIT_EXPIRED"
+    assert excinfo.value.code == "E_WIT_EXP"
 
 
 def test_wit_signature_tamper(vector_set: VectorSet) -> None:
@@ -90,4 +90,4 @@ def test_wit_signature_tamper(vector_set: VectorSet) -> None:
     tampered = f"{head}.{payload}.{b64u_encode(bytes(raw))}"
     with pytest.raises(WitError) as excinfo:
         validate_wit(tampered, anchor, T0 + 60)
-    assert excinfo.value.code == "E_WIT_SIGNATURE"
+    assert excinfo.value.code == "E_WIT_SIG"
