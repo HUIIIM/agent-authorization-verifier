@@ -71,6 +71,14 @@ class VectorSet:
         with open(path, encoding="utf-8") as handle:
             return cls(json.load(handle))
 
+    def add_entry(self, entry: dict) -> None:
+        """Register one vector entry by id, replacing any same-id entry.
+
+        Used to load a contrast vector from the ``vectors/v4/`` directory
+        into a set built from the fixture file.
+        """
+        self.vectors[entry["id"]] = entry
+
     @property
     def set_version(self) -> str:
         return str(self.data.get("set_version"))

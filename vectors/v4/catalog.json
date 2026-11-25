@@ -1,0 +1,50 @@
+{
+  "set_version": "v4",
+  "source": "N-09b incremental piece (MD5 13225715)",
+  "source_note": "Built from the N-09b incremental piece first; re-source to the full v4 set when it arrives and re-run.",
+  "counts": {
+    "total": 29,
+    "positive": 6,
+    "negative": 23,
+    "negative_before_n09b": 22,
+    "probe": 6,
+    "judged": 23
+  },
+  "vectors": [
+    "P-01",
+    "P-02",
+    "P-03",
+    "P-04",
+    "P-05",
+    "P-06",
+    "N-01",
+    "N-02",
+    "N-03",
+    "N-04",
+    "N-05",
+    "N-06",
+    "N-07",
+    "N-08",
+    "N-09",
+    "N-09b",
+    "N-10",
+    "N-11",
+    "N-12",
+    "N-13",
+    "N-14",
+    "N-15",
+    "N-16",
+    "N-17",
+    "N-18",
+    "N-19",
+    "N-20",
+    "N-21",
+    "N-22"
+  ],
+  "files": {
+    "n-09b.json": {
+      "md5": "dd500564b55cd047580f86b2f107d73c",
+      "note": "N-09b vector entry, identical to the entry in tests/fixtures/vectors.json"
+    }
+  }
+}
