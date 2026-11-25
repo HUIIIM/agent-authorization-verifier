@@ -1,0 +1,80 @@
+{
+  "source": "RFC 9421 (HTTP Message Signatures), RFC Editor XML (v3, prepTime 2024-02-14T10:01:44) as published by the HTTP WG at https://raw.githubusercontent.com/httpwg/httpwg.github.io/main/specs/rfc9421.xml",
+  "source_sha256": "9cd75504ddfab6a7c452214bf533236714c7ecabb2185659afdf0e36c62926fd",
+  "extraction": "content of the <sourcecode>/<artwork> element with the given pn attribute, XML entities unescaped, the leading and trailing newline of the element stripped; otherwise byte-for-byte (RFC 8792 line wrapping is kept and undone by the tests)",
+  "license_note": "Excerpts of RFC 9421, Copyright (c) 2024 IETF Trust and the persons identified as the document authors; code components under the Revised BSD License (IETF Trust Legal Provisions, Section 4).",
+  "files": {
+    "s2.5-request.txt": {
+      "pn": "section-2.5-11",
+      "source_section": "RFC 9421 Section 2.5, example request (text before Figure 1)"
+    },
+    "s2.5-figure1-base.txt": {
+      "pn": "section-2.5-13.1",
+      "source_section": "RFC 9421 Section 2.5, Figure 1 (Non-normative Example Signature Base)"
+    },
+    "b2-test-request.txt": {
+      "pn": "section-appendix.b.2-3",
+      "source_section": "RFC 9421 Appendix B.2, test-request"
+    },
+    "b2-test-response.txt": {
+      "pn": "section-appendix.b.2-5",
+      "source_section": "RFC 9421 Appendix B.2, test-response"
+    },
+    "b1.3-test-key-ecc-p256.jwk.json": {
+      "pn": "section-appendix.b.1.3-4",
+      "source_section": "RFC 9421 Appendix B.1.3, test-key-ecc-p256 (JWK)"
+    },
+    "b1.4-test-key-ed25519.jwk.json": {
+      "pn": "section-appendix.b.1.4-4",
+      "source_section": "RFC 9421 Appendix B.1.4, test-key-ed25519 (JWK)"
+    },
+    "b2.1-base.txt": {
+      "pn": "section-appendix.b.2.1-3",
+      "source_section": "RFC 9421 Appendix B.2.1, signature base"
+    },
+    "b2.1-fields.txt": {
+      "pn": "section-appendix.b.2.1-5",
+      "source_section": "RFC 9421 Appendix B.2.1, Signature-Input and Signature fields"
+    },
+    "b2.2-base.txt": {
+      "pn": "section-appendix.b.2.2-3",
+      "source_section": "RFC 9421 Appendix B.2.2, signature base"
+    },
+    "b2.2-fields.txt": {
+      "pn": "section-appendix.b.2.2-5",
+      "source_section": "RFC 9421 Appendix B.2.2, Signature-Input and Signature fields"
+    },
+    "b2.3-base.txt": {
+      "pn": "section-appendix.b.2.3-3",
+      "source_section": "RFC 9421 Appendix B.2.3, signature base"
+    },
+    "b2.3-fields.txt": {
+      "pn": "section-appendix.b.2.3-5",
+      "source_section": "RFC 9421 Appendix B.2.3, Signature-Input and Signature fields"
+    },
+    "b2.4-base.txt": {
+      "pn": "section-appendix.b.2.4-3",
+      "source_section": "RFC 9421 Appendix B.2.4, signature base"
+    },
+    "b2.4-fields.txt": {
+      "pn": "section-appendix.b.2.4-5",
+      "source_section": "RFC 9421 Appendix B.2.4, Signature-Input and Signature fields"
+    },
+    "b2.5-base.txt": {
+      "pn": "section-appendix.b.2.5-3",
+      "source_section": "RFC 9421 Appendix B.2.5, signature base"
+    },
+    "b2.5-fields.txt": {
+      "pn": "section-appendix.b.2.5-5",
+      "source_section": "RFC 9421 Appendix B.2.5, Signature-Input and Signature fields"
+    },
+    "b2.6-base.txt": {
+      "pn": "section-appendix.b.2.6-3",
+      "source_section": "RFC 9421 Appendix B.2.6, signature base"
+    },
+    "b2.6-fields.txt": {
+      "pn": "section-appendix.b.2.6-5",
+      "source_section": "RFC 9421 Appendix B.2.6, Signature-Input and Signature fields"
+    }
+  }
+}

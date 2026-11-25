@@ -114,6 +114,12 @@ Deliberately out of scope for this first cut, by design:
   Other RFC 9421 derived components and component parameters (`;sf`,
   `;bs`, `;name`, `;key`, ...) are rejected as unsupported rather than
   silently mishandled.
+  Signature base construction applies the RFC 9421 Section 2.5 error
+  rules as hard BASE failures: a duplicated component identifier, any
+  misuse of `;req` (never a fallback to the other message), and a
+  non-ASCII base. `@authority` omits the default port of the resolved
+  scheme (https 443, http 80); the scheme is the artifact's explicit one
+  (absolute-form target) or else the profile default https.
 - **Algorithms** are the ones the profile binds through `cnf.jwk.alg`:
   Ed25519 and ES256.
 
@@ -128,6 +134,10 @@ ruff check src tests
 ## Licensing
 
 Code: MIT (see [LICENSE](LICENSE)), copyright Jiahui Miao.
-Test vector data under `tests/fixtures/` is the published suite v4 data,
-licensed CC-BY-4.0 by its publisher; it is included as a test fixture and
-is not covered by this repository's MIT license.
+Test vector data in `tests/fixtures/vectors.json` is the published suite
+v4 data, licensed CC-BY-4.0 by its publisher; it is included as a test
+fixture and is not covered by this repository's MIT license. The excerpts
+in `tests/fixtures/rfc9421/` are verbatim examples from RFC 9421
+(Copyright (c) 2024 IETF Trust and the document authors; code components
+under the Revised BSD License per the IETF Trust Legal Provisions), used
+as test oracles and likewise not covered by the MIT license.

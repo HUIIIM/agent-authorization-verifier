@@ -4,6 +4,13 @@ Parses the exact wire form used by the vector set (CRLF line endings): a
 request or status start line, header fields, and an optional body. Header
 field values are exposed the way RFC 9421 consumes them: leading and
 trailing optional whitespace stripped, repeated fields combined with ", ".
+
+Obsolete line folding (obs-fold, RFC 9112 Section 5.2) is not part of this
+wire form: a field line that begins with SP or HTAB, or a bare CR or LF
+inside a field line, is rejected with MessageParseError (code
+E_CONTEXT_OBS_FOLD) instead of being unfolded or silently misread as a new
+field. RFC 9112 Section 5.2 permits a recipient to reject obs-fold, and the
+RFC 9421 Section 2.5 signature base ABNF admits "no obs-fold nor obs-text".
 """
 
 from __future__ import annotations
@@ -13,6 +20,10 @@ from dataclasses import dataclass, field
 
 class MessageParseError(ValueError):
     """Raised when a message cannot be parsed into start line/headers/body."""
+
+    def __init__(self, detail: str, code: str = "E_CONTEXT_MALFORMED") -> None:
+        super().__init__(detail)
+        self.code = code
 
 
 @dataclass
@@ -55,8 +66,14 @@ class HttpMessage:
         return self.header("host")
 
     def request_parts(self) -> tuple[str, str | None]:
-        """Split a request target into (path, query-or-None)."""
+        """Split a request target into (path, query-or-None). For an
+        absolute-form target (RFC 9112 Section 3.2.2) the scheme and
+        authority are not part of the path."""
         target = self.target or ""
+        if "://" in target:
+            rest = target.split("://", 1)[1]
+            cut = min((i for i in (rest.find("/"), rest.find("?")) if i >= 0), default=-1)
+            target = rest[cut:] if cut >= 0 else ""
         if "?" in target:
             path, query = target.split("?", 1)
             return path, query
@@ -104,6 +121,16 @@ def parse_message(raw: str) -> HttpMessage:
     for line in lines[1:]:
         if not line:
             continue
+        if line[0] in " \t":
+            raise MessageParseError(
+                f"obs-fold (field line starting with whitespace) is rejected: {line!r}",
+                "E_CONTEXT_OBS_FOLD",
+            )
+        if "\r" in line or "\n" in line:
+            raise MessageParseError(
+                f"bare CR or LF inside a field line is rejected: {line!r}",
+                "E_CONTEXT_OBS_FOLD",
+            )
         if ":" not in line:
             raise MessageParseError(f"malformed header line: {line!r}")
         name, value = line.split(":", 1)
