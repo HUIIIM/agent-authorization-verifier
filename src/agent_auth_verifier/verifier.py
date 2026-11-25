@@ -221,7 +221,7 @@ class Verifier:
         try:
             message = parse_message(raw_message)
         except MessageParseError as exc:
-            self._fail(results, "CONTEXT", "E_CONTEXT_MALFORMED", str(exc))
+            self._fail(results, "CONTEXT", exc.code, str(exc))
             return self._assemble(results, "server", notes)
         role = "server" if message.kind == "request" else "client"
         paired: HttpMessage | None = None
@@ -446,7 +446,11 @@ class Verifier:
             try:
                 signature_base = build_signature_base(message, selected, paired)
             except ComponentError as exc:
-                self._record(results, "BASE", "blocked", detail=f"component not derivable: {exc}")
+                # A hard failure, never "blocked": a base that cannot be built
+                # must reject the artifact (RFC 9421 Section 2.5: errors fail the
+                # algorithm). Recording it as blocked would let the verdict fall
+                # through to ACCEPT with CRYPTO never run.
+                self._fail(results, "BASE", exc.code, exc.detail)
             else:
                 if expected_base is not None and selected_label in expected_base:
                     if signature_base == expected_base[selected_label]:

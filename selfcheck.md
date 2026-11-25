@@ -137,10 +137,12 @@ except N-09's, as tabled.
    RFC 9421 derived components (@scheme, @target-uri, @query-param,
    @request-response, ...) and component parameters (;sf, ;bs, ;tr,
    ;name, ;key) raise a BASE-stage error instead of being handled.
-5. **@authority default-port rule** treats port 443 as the default (the
-   profile's exchanges are https, per the wimse-aud values); the message
-   itself carries no scheme, so a non-https deployment would need a
-   scheme-aware configuration, which v1 does not offer.
+5. **@authority default-port rule** (revised in S-01, D-5): the default
+   port is looked up per scheme (https 443, http 80). The scheme is
+   resolved by a two-level, final rule: an artifact carrying an explicit
+   scheme (an absolute-form request target) wins; otherwise the profile
+   default https applies. The message model itself is unchanged and
+   carries no separate scheme field.
 6. **WIT validation is the profile-relevant subset**: issuer signature
    against the configured anchor, exp/iat window at the verification
    time, cnf.jwk extraction. It is not a full workload-creds validation
@@ -158,4 +160,29 @@ except N-09's, as tabled.
    the layer-2 refinement differs.
 9. **HTTP parsing is the wire form the profile uses**: HTTP/1.1 with CRLF
    line endings, no chunked transfer coding, no header folding. HTTP/2
-   and HTTP/3 message forms are out of scope for v1.
+   and HTTP/3 message forms are out of scope for v1. Since S-01 (D-3),
+   obs-fold is rejected explicitly (CONTEXT/E_CONTEXT_OBS_FOLD) instead of
+   being misread as a new field line.
+
+## S-01 BASE refactor delta (2026-11-25)
+
+Gap fixes D-1..D-5 and the added vectors are in `tests/test_s01_vectors.py`
+and `tests/test_s01_gaps.py`; RFC 9421 excerpts used as oracles are in
+`tests/fixtures/rfc9421/` (provenance and per-file source section in its
+`manifest.json`).
+
+| Check | Command | Result |
+|---|---|---|
+| Unit + suite tests | `python -m pytest -q` | **100 passed, 0 failed** (42 before; 16 vector tests + 42 gap tests added, none removed) |
+| Lint | `ruff check src tests` | clean |
+| Format | `ruff format --check src tests` | 18 files, all formatted |
+| Suite run (CLI) | `aav run-vectors --set tests/fixtures/vectors.json` | unchanged: 22 matched, 1 mismatched (N-09, as above), 6 not judgeable |
+
+Behavior change visible in the suite run: a `ComponentError` while
+building the signature base is now a BASE **failure** (code
+`E_BASE_COMPONENT`, `E_BASE_DUPLICATE_COMPONENT`, `E_BASE_REQ_MISUSE` or
+`E_BASE_NON_ASCII`), not "blocked". Before, "blocked" let an artifact with
+an underivable base reach ACCEPT with CRYPTO never run. Consequence for the
+cascade notes above: N-02 and N-21 now also report BASE as a cascade (their
+CONNECT `@path` cannot be derived); primary stage and code are unchanged
+for every vector.
