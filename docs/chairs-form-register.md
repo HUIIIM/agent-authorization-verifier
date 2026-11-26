@@ -24,19 +24,13 @@ further action; cite why).
 
 | Item | What it depends on | Sent | Status | Evidence | Blocks |
 | --- | --- | --- | --- | --- | --- |
-| (none registered) | | | | | |
+| C-1: Chairs letter reply specifying the contribution form （贡献形态） | The draft's chairs specifying the expected contribution form, asked for in the contribution letter | Yes, via the contribution letter | **AWAITING REPLY** （回复未到） | Item from the suite design doc, §5.1 acceptance row 4 and its uncovered-surface note 1; supplied 2026-11-26. No reply is on record | Nothing: this is an open dependency by design and does not block W7. Until the reply arrives, the repository form and the citation/maintenance wording follow the brief's interim wording. When it arrives, the README and this register are revised together, and the change is logged in [VERSION-MAP.md](../VERSION-MAP.md) |
 
-## Intake gap at W7 (open)
+## Intake gap at W7 (closed 2026-11-26)
 
-The item list for this register lives in the S-01 suite design, which is
-not in this repository, and the W7 brief did not enumerate the items.
-This repository holds no record of any chairs-side form, submission or
-reply: a search of every tracked file at W7 finds none (the only
-pending items on record are household decisions in
-[w3-wit-u3.md](w3-wit-u3.md) and the fixture's "pending U4" verdicts,
-neither of which is a chairs-side item).
-
-So at W7 **no chairs-side item is registered, and none is recorded as
-answered**. This is an open gap, not a finding that there are no items.
-Each item, with its true status, is to be appended as a row above once
-the design's list is supplied.
+When this register was first created at W7, the item list (which lives in
+the S-01 suite design, not in this repository) had not been supplied, so
+no item was registered. The design's list was then supplied: §5.1
+acceptance row 4 and its uncovered-surface note 1 name exactly one
+chairs-side item, registered above as C-1. C-1 is **not** answered; its
+status is AWAITING REPLY.
