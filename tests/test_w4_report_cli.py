@@ -226,7 +226,7 @@ def test_clock_specs() -> None:
     )
     assert isinstance(clock_from_spec("system"), SystemClock)
     with pytest.raises(ValueError):
-        FixedClock(dt.datetime(2026, 1, 1))  # noqa: DTZ001 -- naive on purpose
+        FixedClock(dt.datetime.fromisoformat("2026-01-01T00:00:00"))  # naive on purpose
 
 
 def test_judgment_path_reads_no_wall_clock(monkeypatch) -> None:

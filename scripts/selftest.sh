@@ -16,8 +16,9 @@ cd "$(dirname "$0")/.."
 
 if [ ! -x .venv/bin/python ]; then
   "${PYTHON:-python3}" -m venv .venv
-  .venv/bin/python -m pip install -q --upgrade pip
-  .venv/bin/python -m pip install -q -e ".[dev]"
+  echo "creating .venv (install log: .venv/install.log)"
+  .venv/bin/python -m pip install -q -e ".[dev]" >.venv/install.log 2>&1 \
+    || { cat .venv/install.log; exit 1; }
 fi
 export PATH="$PWD/.venv/bin:$PATH"
 PY=.venv/bin/python
