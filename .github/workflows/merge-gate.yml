@@ -1,0 +1,35 @@
+# S-01 merge gate (W7; design section 4.6).
+# Required check for merging: "merge-gate / run-all + regen self-check".
+# The job runs scripts/ci_gate.sh, the same script scripts/selftest.sh
+# rehearses locally. A failing run --all or a failing (or blocked) regen
+# self-check fails the job and so blocks the merge. The gate changes no
+# judgment, vector, baseline or expected value.
+name: merge-gate
+
+on:
+  pull_request:
+  push:
+    branches: ["主要"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: merge-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: run-all + regen self-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install package with dev extras
+        run: python -m pip install -e ".[dev]"
+      - name: Merge gate (run --all + regen self-check)
+        run: bash scripts/ci_gate.sh
