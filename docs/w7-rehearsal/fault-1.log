@@ -1,0 +1,65 @@
+== gate 1/2: run --all (baseline reconciliation)
+P-01   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-02   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-03   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-04   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-05   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-06   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+N-01   MATCH
+       t=1795000060: expected REJECT COVERAGE/E_COVERAGE_MISSING, got REJECT COVERAGE/E_COVERAGE_MISSING (cascades: CRYPTO) -> match
+N-02   MATCH
+       t=1795000060: expected REJECT COVERAGE/E_COVERAGE_FORBIDDEN, got REJECT COVERAGE/E_COVERAGE_FORBIDDEN (cascades: BASE) -> match
+N-03   MATCH
+       t=1795000060: expected REJECT COVERAGE/E_DIGEST_MISSING, got REJECT COVERAGE/E_DIGEST_MISSING (cascades: CRYPTO) -> match
+N-04   MATCH
+       t=1795000060: expected REJECT DIGEST/E_DIGEST_MISMATCH, got REJECT DIGEST/E_DIGEST_MISMATCH -> match
+N-05   MATCH
+       t=1795000060: expected REJECT PARAMS/E_PARAM_MISSING, got REJECT PARAMS/E_PARAM_MISSING (cascades: CRYPTO) -> match
+N-06   MATCH
+       t=1795000060: expected REJECT PARAMS/E_PARAM_FORBIDDEN, got REJECT PARAMS/E_PARAM_FORBIDDEN -> match
+N-07   MATCH
+       t=1795000060: expected REJECT PARAMS/E_PARAM_FORBIDDEN, got REJECT PARAMS/E_PARAM_FORBIDDEN -> match
+N-08   MATCH
+       t=1795000060: expected REJECT SELECT/E_TAG_AMBIGUOUS, got REJECT SELECT/E_TAG_AMBIGUOUS -> match
+N-09   MISMATCH [attribution-only]
+       t=1795003600: expected REJECT WINDOW/E_WINDOW_OUTSIDE, got REJECT WIT/E_WIT_EXP (cascades: WINDOW) -> MISMATCH
+N-09b  MATCH
+       t=1795000300: expected ACCEPT, got ACCEPT -> match
+       t=1795000301: expected REJECT WINDOW/E_WINDOW_OUTSIDE, got REJECT WINDOW/E_WINDOW_OUTSIDE -> match
+N-10   MATCH
+       t=1795000060: expected REJECT AUD/E_AUD_MISMATCH, got REJECT AUD/E_AUD_MISMATCH -> match
+N-11   MATCH
+       t=1795000060: expected REJECT PARAMS/E_PARAM_MISSING, got REJECT PARAMS/E_PARAM_MISSING -> match
+N-12   MATCH
+       t=1795000060: expected CLIENT_REJECT PARAMS/E_REQNONCE_MISSING, got CLIENT_REJECT PARAMS/E_REQNONCE_MISSING -> match
+N-13   MATCH
+       t=1795000060: expected CLIENT_REJECT BINDING/E_REQNONCE_MISMATCH, got CLIENT_REJECT BINDING/E_REQNONCE_MISMATCH -> match
+N-14   MATCH
+       t=1795000060: expected CLIENT_REJECT BINDING/E_RESPONSE_UNSIGNED, got CLIENT_REJECT BINDING/E_RESPONSE_UNSIGNED -> match
+N-15   MATCH
+       t=1795000060: expected REJECT CRYPTO/E_ALG_BINDING, got REJECT CRYPTO/E_ALG_BINDING -> match
+N-16   NOT_JUDGEABLE  -- behavior probe, subject=sender: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ENTROPY if the probed behavior occurs)
+N-17   NOT_JUDGEABLE  -- behavior probe, subject=server: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ERROR_SURFACE if the probed behavior occurs)
+N-18   NOT_JUDGEABLE  -- behavior probe, subject=server: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_UNSIGNED_SUCCESS if the probed behavior occurs)
+N-19   NOT_JUDGEABLE  -- behavior probe, subject=sender: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ACCEPT_SIG_WEAK if the probed behavior occurs)
+N-20   NOT_JUDGEABLE  -- behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_PROCESS_ORDER if the probed behavior occurs)
+N-21   MATCH
+       t=1795000060: expected CLIENT_REJECT COVERAGE/E_COVERAGE_FORBIDDEN, got CLIENT_REJECT COVERAGE/E_COVERAGE_FORBIDDEN (cascades: BASE) -> match
+N-22   NOT_JUDGEABLE  -- behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_SELECTION_BY_LABEL if the probed behavior occurs)
+contrast N-09b (v4/n-09b.json): pass; anomalies: none
+       step 1     pass | pass
+       step 1b    pass | pass
+       step 1c    pass | pass
+       step 2     pass | pass
+       step 3     pass | pass
+       step 4     pass | pass
+       step 5     pass | fail
+       step final ACCEPT | REJECT
+summary: 22 matched, 1 mismatched, 6 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); selection all
+baseline: DIVERGENT: vector.N-10 expected MISMATCH live MATCH

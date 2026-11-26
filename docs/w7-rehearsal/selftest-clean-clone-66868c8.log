@@ -1,0 +1,146 @@
+creating .venv (install log: .venv/install.log)
+
+== 1. unit + suite tests, lint, format
+........................................................................ [ 50%]
+......................................................................   [100%]
+142 passed in 0.77s
+All checks passed!
+24 files already formatted
+
+== 2. section 4.2 command forms
+ok (exit 0): .venv/bin/python -m agent_auth_verifier run --all --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --baseline baselines/s01-v4.json -> summary: 22 matched, 1 mismatched, 6 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); selection all baseline: no divergences 
+ok (exit 0): .venv/bin/python -m agent_auth_verifier run --id N-09b --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --baseline baselines/s01-v4.json -> summary: 1 matched, 0 mismatched, 0 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); selection id=N-09b baseline: no divergences 
+ok (exit 0): .venv/bin/python -m agent_auth_verifier run --class negative-behavior --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --baseline baselines/s01-v4.json -> summary: 0 matched, 0 mismatched, 6 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); selection class=negative-behavior baseline: no divergences 
+ok (exit 2): .venv/bin/python -m agent_auth_verifier run --id X-99 --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --baseline baselines/s01-v4.json -> aav run: unknown vector id 'X-99'; known: P-01, P-02, P-03, P-04, P-05, P-06, N-01, N-02, N-03, N-04, N-05, N-06, N-07, N-08, N-09, N-09b, N-10, N-11, N-12, N-13, N-14, N-15, N-16, N-17, N-18, N-19, N-20, N-21, N-22 
+ok (exit 1): .venv/bin/python -m agent_auth_verifier run --all --set tests/fixtures/vectors.json -> N-22   NOT_JUDGEABLE  -- behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_SELECTION_BY_LABEL if the probed behavior occurs) summary: 22 matched, 1 mismatched, 6 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); selection all 
+ok (exit 0): .venv/bin/python -m agent_auth_verifier report --format json --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --baseline baselines/s01-v4.json --out build/selftest/report.json -> 
+ok (exit 0): .venv/bin/python -m agent_auth_verifier report --format md --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --baseline baselines/s01-v4.json --out build/selftest/report.md -> 
+
+== 3. canonical report, generated twice per format
+canonical.json run 1 sha256 55974b063dae964b12e3dc84158b4b1ef6594198988a9a5372192f416faa1529
+canonical.json run 2 sha256 55974b063dae964b12e3dc84158b4b1ef6594198988a9a5372192f416faa1529
+canonical.md run 1 sha256 deaca78b1cf04f872337f0de3255be4406dd53dd7585df533b2191924fa600fa
+canonical.md run 2 sha256 deaca78b1cf04f872337f0de3255be4406dd53dd7585df533b2191924fa600fa
+
+== 4. W5 selfcheck
+report: selfcheck/reports/selfcheck-2026-11-26-r4.md
+overall: PASS
+  (a) PASS: 9/9 JWKs equal
+  (b) PASS: 8/8 signatures byte-identical (bases identical where provided)
+  (b+) PASS: 17/17 negative-message vectors byte-identical across two constructions
+  (c) PASS: 4/4 entries PASS on old base and FAIL on corrected base; vendored MD5 identical to source; fixture corrected_base_verdict null (pending U4) for 4/4, so the corrected-base leg is judged against the W5 requirement only
+  (1) PASS: 142 passed in 0.61s
+  (2) PASS: All checks passed!
+  (3) PASS: 24 files already formatted
+  (4) PASS: 26 files, 26 parse
+  (5) PASS: 22 matched, 1 mismatched, 6 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); exit 1
+  (4.6) PASS: no src/ module imports or references selfcheck
+
+== 5. CI gate rehearsal (scripts/ci_gate.sh, as the merge-gate workflow runs it)
+== gate 1/2: run --all (baseline reconciliation)
+P-01   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-02   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-03   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-04   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-05   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+P-06   MATCH
+       t=1795000060: expected ACCEPT, got ACCEPT -> match
+N-01   MATCH
+       t=1795000060: expected REJECT COVERAGE/E_COVERAGE_MISSING, got REJECT COVERAGE/E_COVERAGE_MISSING (cascades: CRYPTO) -> match
+N-02   MATCH
+       t=1795000060: expected REJECT COVERAGE/E_COVERAGE_FORBIDDEN, got REJECT COVERAGE/E_COVERAGE_FORBIDDEN (cascades: BASE) -> match
+N-03   MATCH
+       t=1795000060: expected REJECT COVERAGE/E_DIGEST_MISSING, got REJECT COVERAGE/E_DIGEST_MISSING (cascades: CRYPTO) -> match
+N-04   MATCH
+       t=1795000060: expected REJECT DIGEST/E_DIGEST_MISMATCH, got REJECT DIGEST/E_DIGEST_MISMATCH -> match
+N-05   MATCH
+       t=1795000060: expected REJECT PARAMS/E_PARAM_MISSING, got REJECT PARAMS/E_PARAM_MISSING (cascades: CRYPTO) -> match
+N-06   MATCH
+       t=1795000060: expected REJECT PARAMS/E_PARAM_FORBIDDEN, got REJECT PARAMS/E_PARAM_FORBIDDEN -> match
+N-07   MATCH
+       t=1795000060: expected REJECT PARAMS/E_PARAM_FORBIDDEN, got REJECT PARAMS/E_PARAM_FORBIDDEN -> match
+N-08   MATCH
+       t=1795000060: expected REJECT SELECT/E_TAG_AMBIGUOUS, got REJECT SELECT/E_TAG_AMBIGUOUS -> match
+N-09   MISMATCH [attribution-only]
+       t=1795003600: expected REJECT WINDOW/E_WINDOW_OUTSIDE, got REJECT WIT/E_WIT_EXP (cascades: WINDOW) -> MISMATCH
+N-09b  MATCH
+       t=1795000300: expected ACCEPT, got ACCEPT -> match
+       t=1795000301: expected REJECT WINDOW/E_WINDOW_OUTSIDE, got REJECT WINDOW/E_WINDOW_OUTSIDE -> match
+N-10   MATCH
+       t=1795000060: expected REJECT AUD/E_AUD_MISMATCH, got REJECT AUD/E_AUD_MISMATCH -> match
+N-11   MATCH
+       t=1795000060: expected REJECT PARAMS/E_PARAM_MISSING, got REJECT PARAMS/E_PARAM_MISSING -> match
+N-12   MATCH
+       t=1795000060: expected CLIENT_REJECT PARAMS/E_REQNONCE_MISSING, got CLIENT_REJECT PARAMS/E_REQNONCE_MISSING -> match
+N-13   MATCH
+       t=1795000060: expected CLIENT_REJECT BINDING/E_REQNONCE_MISMATCH, got CLIENT_REJECT BINDING/E_REQNONCE_MISMATCH -> match
+N-14   MATCH
+       t=1795000060: expected CLIENT_REJECT BINDING/E_RESPONSE_UNSIGNED, got CLIENT_REJECT BINDING/E_RESPONSE_UNSIGNED -> match
+N-15   MATCH
+       t=1795000060: expected REJECT CRYPTO/E_ALG_BINDING, got REJECT CRYPTO/E_ALG_BINDING -> match
+N-16   NOT_JUDGEABLE  -- behavior probe, subject=sender: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ENTROPY if the probed behavior occurs)
+N-17   NOT_JUDGEABLE  -- behavior probe, subject=server: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ERROR_SURFACE if the probed behavior occurs)
+N-18   NOT_JUDGEABLE  -- behavior probe, subject=server: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_UNSIGNED_SUCCESS if the probed behavior occurs)
+N-19   NOT_JUDGEABLE  -- behavior probe, subject=sender: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ACCEPT_SIG_WEAK if the probed behavior occurs)
+N-20   NOT_JUDGEABLE  -- behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_PROCESS_ORDER if the probed behavior occurs)
+N-21   MATCH
+       t=1795000060: expected CLIENT_REJECT COVERAGE/E_COVERAGE_FORBIDDEN, got CLIENT_REJECT COVERAGE/E_COVERAGE_FORBIDDEN (cascades: BASE) -> match
+N-22   NOT_JUDGEABLE  -- behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_SELECTION_BY_LABEL if the probed behavior occurs)
+contrast N-09b (v4/n-09b.json): pass; anomalies: none
+       step 1     pass | pass
+       step 1b    pass | pass
+       step 1c    pass | pass
+       step 2     pass | pass
+       step 3     pass | pass
+       step 4     pass | pass
+       step 5     pass | fail
+       step final ACCEPT | REJECT
+summary: 22 matched, 1 mismatched, 6 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); selection all
+baseline: no divergences
+== gate 2/2: regen self-check (selfcheck/run_selfcheck.py)
+report: selfcheck/reports/selfcheck-2026-11-26-r5.md
+overall: PASS
+  (a) PASS: 9/9 JWKs equal
+  (b) PASS: 8/8 signatures byte-identical (bases identical where provided)
+  (b+) PASS: 17/17 negative-message vectors byte-identical across two constructions
+  (c) PASS: 4/4 entries PASS on old base and FAIL on corrected base; vendored MD5 identical to source; fixture corrected_base_verdict null (pending U4) for 4/4, so the corrected-base leg is judged against the W5 requirement only
+  (1) PASS: 142 passed in 0.58s
+  (2) PASS: All checks passed!
+  (3) PASS: 24 files already formatted
+  (4) PASS: 26 files, 26 parse
+  (5) PASS: 22 matched, 1 mismatched, 6 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); exit 1
+  (4.6) PASS: no src/ module imports or references selfcheck
+== MERGE GATE PASS
+
+== 6. README commands, run literally in a clean clone
+clean clone of 66868c8a678d at /tmp/aav-readme-check-0orvdjxk/clone
+ok   README.md:74 [bash] exit 0 (want 0); expect 0/0: python3 -m venv .venv
+ok   README.md:79 [bash] exit 0 (want 0); expect 0/0: . .venv/bin/activate
+ok   README.md:84 [bash] exit 0 (want 0); expect 2/2: python -m pip install -e ".[dev]"
+ok   README.md:96 [python] exit 0 (want 0); expect 3/3: import json
+ok   README.md:129 [bash] exit 0 (want 0); expect 2/2: aav verify --message examples/p-01-request.http --config examples/trusted-config.json --ti
+ok   README.md:136 [bash] exit 1 (want 1); expect 2/2: aav verify --message examples/n-10-request.http --config examples/trusted-config.json --ti
+ok   README.md:143 [bash] exit 0 (want 0); expect 2/2: aav verify --message examples/p-01-request.http --config examples/trusted-config.json --ti
+ok   README.md:161 [bash] exit 1 (want 1); expect 1/1: aav run-vectors --set tests/fixtures/vectors.json
+ok   README.md:172 [bash] exit 0 (want 0); expect 2/2: aav run --all --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --baselin
+ok   README.md:179 [bash] exit 0 (want 0); expect 2/2: aav run --id N-09b --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --ba
+ok   README.md:186 [bash] exit 0 (want 0); expect 2/2: aav run --class positive --set tests/fixtures/vectors.json --baseline baselines/s01-v4.jso
+ok   README.md:193 [bash] exit 1 (want 1); expect 1/1: aav run --all --set tests/fixtures/vectors.json
+ok   README.md:200 [bash] exit 2 (want 2); expect 1/1: aav run --id X-99 --set tests/fixtures/vectors.json
+ok   README.md:221 [bash] exit 0 (want 0); expect 2/2: aav report --format md --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json 
+ok   README.md:238 [bash] exit 0 (want 0); expect 1/1: aav report --format json --canonical --set tests/fixtures/vectors.json --contrast vectors/
+ok   README.md:243 [bash] exit 0 (want 0); expect 1/1: sha256sum reports/s01-v4-canonical.json
+ok   README.md:252 [bash] exit 0 (want 0); expect 1/1: python -m pytest -q
+ok   README.md:257 [bash] exit 0 (want 0); expect 1/1: ruff check src tests
+ok   README.md:262 [bash] exit 0 (want 0); expect 1/1: ruff format --check src tests
+ok   README.md:280 [bash] exit 0 (want 0); expect 3/3: bash scripts/ci_gate.sh
+ok   README.md:295 [bash] exit 0 (want 0); expect 3/3: bash scripts/selftest.sh
+ok   README.md:303 [bash] exit 0 (want 0); expect 1/1: python scripts/check_readme.py --list
+README check: 22/22 blocks as stated
+
+== SELFTEST PASS
