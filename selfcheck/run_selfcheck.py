@@ -60,7 +60,10 @@ from agent_auth_verifier.sf import SFBytes, SFInnerList, SFItem, parse_dictionar
 from agent_auth_verifier.vectors import VectorSet
 
 VECTORS = ROOT / "tests" / "fixtures" / "vectors.json"
-ANTI_MIXING_DIR = ROOT / "selfcheck" / "fixtures" / "anti-mixing"
+ANTI_MIXING_FILE = ROOT / "selfcheck" / "fixtures" / "anti-mixing" / "old-base-signatures.json"
+ANTI_MIXING_SOURCE_REPO = "HUIIIM/wimse-http-signature-test-vectors"
+ANTI_MIXING_SOURCE_PATH = "selfcheck/anti-mixing/old-base-signatures.json"
+ANTI_MIXING_SOURCE_MD5 = "a9ff2f3a31c7e2cf64fe44328cab0646"
 REPORTS = ROOT / "selfcheck" / "reports"
 P256_N = 0xFFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551
 LABEL_PREFIX = "s01-validation-vectors:"
@@ -254,48 +257,71 @@ def check_b_regen(vs: VectorSet, data: dict) -> Check:
 
 
 # -- (c) anti-mixing -------------------------------------------------------
-def check_c(data: dict) -> Check:
+def _verdict(ok: bool) -> str:
+    return "PASS" if ok else "FAIL"
+
+
+def check_c(vs: VectorSet, data: dict) -> Check:
+    rel = ANTI_MIXING_FILE.relative_to(ROOT)
     c = Check(
         "c",
         "Old-base signatures: FAIL on corrected base, PASS on old base",
-        f"verify each fixture in {ANTI_MIXING_DIR.relative_to(ROOT)}/",
+        f"verify each entry of {rel} against old_base and corrected_base",
     )
-    files = sorted(ANTI_MIXING_DIR.glob("*.json")) if ANTI_MIXING_DIR.is_dir() else []
-    if not files:
-        _, paths = _run(["git", "log", "--all", "--name-only", "--format="])
-        hits = sorted(
-            {p for p in paths.splitlines() if re.search(r"anti.?mix|old.?base", p, re.IGNORECASE)}
-        )
+    if not ANTI_MIXING_FILE.is_file():
         c.status = "BLOCKED"
-        c.result = "anti-mixing fixtures not present in the repository; not run"
-        c.details.append(
-            f"No *.json under {ANTI_MIXING_DIR.relative_to(ROOT)}/. Live sweep of every "
-            "path in the history of all local refs for anti-mixing/old-base names: "
-            + (", ".join(hits) if hits else "no hits")
-            + ". Drop the W2b fixtures there (format: selfcheck/README.md) and re-run."
-        )
+        c.result = f"{rel} not present; not run"
         return c
-    keys = {k["kid"]: k for k in data["materials"]["keys"]}
+    raw = ANTI_MIXING_FILE.read_bytes()
+    md5 = hashlib.md5(raw).hexdigest()
+    md5_ok = md5 == ANTI_MIXING_SOURCE_MD5
+    c.details.append(
+        f"Vendored copy MD5 `{md5}` vs source MD5 `{ANTI_MIXING_SOURCE_MD5}` "
+        f"({ANTI_MIXING_SOURCE_REPO}:{ANTI_MIXING_SOURCE_PATH}): "
+        + ("**identical**" if md5_ok else "**DIFFERENT**")
+    )
+    fx = json.loads(raw)
+    keys = {k["name"]: k for k in data["materials"]["keys"]}
+    entries = fx.get("entries", [])
     good = 0
-    for f in files:
-        fx = json.loads(f.read_text())
-        key = keys[fx["kid"]]
+    pending = 0
+    for e in entries:
+        key = keys[e["signer"]]
         pub = jwk_to_public_key(key["public_jwk"])
-        sig = base64.b64decode(fx["signature"])
-        on_old = verify_signature(key["alg"], pub, sig, fx["old_base"].encode("utf-8"))
-        on_new = verify_signature(key["alg"], pub, sig, fx["corrected_base"].encode("utf-8"))
-        ok = on_old and not on_new
+        sig = base64.b64decode(e["old_signature"])
+        on_old = _verdict(verify_signature(e["alg"], pub, sig, e["old_base"].encode("utf-8")))
+        on_new = _verdict(verify_signature(e["alg"], pub, sig, e["corrected_base"].encode("utf-8")))
+        exp_old, exp_new = e.get("old_base_verdict"), e.get("corrected_base_verdict")
+        # The W5 acceptance requirement: PASS on the old base, FAIL on the corrected base.
+        req_ok = on_old == "PASS" and on_new == "FAIL" and key["alg"] == e["alg"]
+        # The fixture's own expectations; null means not asserted by the fixture.
+        fx_old_ok = exp_old is None or exp_old == on_old
+        fx_new_ok = exp_new is None or exp_new == on_new
+        pending += exp_new is None
+        ok = req_ok and fx_old_ok and fx_new_ok
         good += ok
+        provided = (vs.vectors[e["vector"]].get("signature_base_provided") or {}).get(e["label"])
         c.details.append(
-            f"{fx.get('id', f.stem)}: old base {'PASS' if on_old else 'FAIL'}, "
-            f"corrected base {'PASS' if on_new else 'FAIL'} -> "
-            + ("as required" if ok else "VIOLATION")
+            f"{e['vector']} {e['label']} ({e['alg']}, signer {e['signer']}): "
+            f"old base {on_old} (fixture expects {exp_old}); "
+            f"corrected base {on_new} (fixture expects "
+            + ("null, pending U4" if exp_new is None else str(exp_new))
+            + "); corrected_base == suite signature_base_provided: "
+            + str(provided == e["corrected_base"])
+            + (" -> as required" if ok else " -> VIOLATION")
         )
-    c.status = "PASS" if good == len(files) else "FAIL"
-    c.result = f"{good}/{len(files)} behave as required"
-    if len(files) != 4:
-        c.status = "FAIL"
-        c.result += f" (expected 4 fixtures, found {len(files)})"
+    n = len(entries)
+    c.status = "PASS" if good == n == 4 and md5_ok else "FAIL"
+    c.result = f"{good}/{n} entries PASS on old base and FAIL on corrected base; vendored MD5 " + (
+        "identical to source" if md5_ok else "DIFFERS from source"
+    )
+    if n != 4:
+        c.result += f" (expected 4 entries, found {n})"
+    if pending:
+        c.result += (
+            f"; fixture corrected_base_verdict null (pending U4) for {pending}/{n}, "
+            "so the corrected-base leg is judged against the W5 requirement only"
+        )
     return c
 
 
@@ -459,7 +485,7 @@ def main(argv: list[str] | None = None) -> int:
 
     data = json.loads(VECTORS.read_text())
     vs = VectorSet.load(VECTORS)
-    acceptance = [check_a(data), check_b(vs, data), check_b_regen(vs, data), check_c(data)]
+    acceptance = [check_a(data), check_b(vs, data), check_b_regen(vs, data), check_c(vs, data)]
     items, suite = five_items()
     boundary = boundary_check()
     n09_class, n09_leg = classify_n09(suite["rows"])
