@@ -1,0 +1,53 @@
+{
+  "baseline": "S-01 suite readings, set v4",
+  "provenance": [
+    "selfcheck.md (2026-11-23): per-vector outcome table and the named N-09 divergence",
+    "selfcheck/reports/selfcheck-2026-11-26-r2.md: 22 matched; N-09 attribution-only; N-09b MATCH",
+    "tests/test_w3_contrast.py: N-09b contrast verdict pass, no CONTRAST_ANOMALY"
+  ],
+  "note": "Recorded readings only. Live readings that differ are reported as divergences; this file is never rewritten to match a live run.",
+  "set_version": "v4",
+  "set_md5": "b08b4063023d6194d90d273ce343e1af",
+  "summary": {
+    "matched": 22,
+    "mismatched": 1,
+    "not_judgeable": 6
+  },
+  "readings": {
+    "P-01": "MATCH",
+    "P-02": "MATCH",
+    "P-03": "MATCH",
+    "P-04": "MATCH",
+    "P-05": "MATCH",
+    "P-06": "MATCH",
+    "N-01": "MATCH",
+    "N-02": "MATCH",
+    "N-03": "MATCH",
+    "N-04": "MATCH",
+    "N-05": "MATCH",
+    "N-06": "MATCH",
+    "N-07": "MATCH",
+    "N-08": "MATCH",
+    "N-09": "attribution-only",
+    "N-09b": "MATCH",
+    "N-10": "MATCH",
+    "N-11": "MATCH",
+    "N-12": "MATCH",
+    "N-13": "MATCH",
+    "N-14": "MATCH",
+    "N-15": "MATCH",
+    "N-16": "NOT_JUDGEABLE",
+    "N-17": "NOT_JUDGEABLE",
+    "N-18": "NOT_JUDGEABLE",
+    "N-19": "NOT_JUDGEABLE",
+    "N-20": "NOT_JUDGEABLE",
+    "N-21": "MATCH",
+    "N-22": "NOT_JUDGEABLE"
+  },
+  "contrast": {
+    "N-09b": {
+      "verdict": "pass",
+      "anomalies": 0
+    }
+  }
+}
