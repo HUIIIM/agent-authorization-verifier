@@ -1,0 +1,1108 @@
+{
+  "contrast": [
+    {
+      "anomalies": [],
+      "id": "N-09b",
+      "legs": [
+        {
+          "failing_code": null,
+          "failing_stage": null,
+          "match": true,
+          "mismatches": [],
+          "verdict": "ACCEPT",
+          "verify_time": 1795000300
+        },
+        {
+          "failing_code": "E_WINDOW_OUTSIDE",
+          "failing_stage": "WINDOW",
+          "match": true,
+          "mismatches": [],
+          "verdict": "REJECT",
+          "verify_time": 1795000301
+        }
+      ],
+      "source": {
+        "catalog_md5_match": true,
+        "file": "v4/n-09b.json",
+        "md5": "dd500564b55cd047580f86b2f107d73c"
+      },
+      "table": [
+        {
+          "codes": [
+            null,
+            null
+          ],
+          "invariant": true,
+          "label": "WIT issuer signature",
+          "statuses": [
+            "pass",
+            "pass"
+          ],
+          "step": "1"
+        },
+        {
+          "codes": [
+            null,
+            null
+          ],
+          "invariant": true,
+          "label": "WIT cnf binding",
+          "statuses": [
+            "pass",
+            "pass"
+          ],
+          "step": "1b"
+        },
+        {
+          "codes": [
+            null,
+            null
+          ],
+          "invariant": false,
+          "label": "WIT not expired",
+          "statuses": [
+            "pass",
+            "pass"
+          ],
+          "step": "1c"
+        },
+        {
+          "codes": [
+            null,
+            null
+          ],
+          "invariant": true,
+          "label": "Message signature cryptography",
+          "statuses": [
+            "pass",
+            "pass"
+          ],
+          "step": "2"
+        },
+        {
+          "codes": [
+            null,
+            null
+          ],
+          "invariant": true,
+          "label": "Coverage and required parameters",
+          "statuses": [
+            "pass",
+            "pass"
+          ],
+          "step": "3"
+        },
+        {
+          "codes": [
+            null,
+            null
+          ],
+          "invariant": true,
+          "label": "wimse-aud match",
+          "statuses": [
+            "pass",
+            "pass"
+          ],
+          "step": "4"
+        },
+        {
+          "codes": [
+            null,
+            "E_WINDOW_OUTSIDE"
+          ],
+          "invariant": false,
+          "label": "Signature validity window",
+          "statuses": [
+            "pass",
+            "fail"
+          ],
+          "step": "5"
+        },
+        {
+          "codes": [
+            null,
+            "E_WINDOW_OUTSIDE"
+          ],
+          "invariant": false,
+          "label": "Final judgment",
+          "statuses": [
+            "ACCEPT",
+            "REJECT"
+          ],
+          "step": "final"
+        }
+      ],
+      "verdict": "pass"
+    }
+  ],
+  "reconciliation": {
+    "baseline": {
+      "file": "baselines/s01-v4.json",
+      "sha256": "b98c35e40085744c48519ea4dac59b94958872730b1f8b98e20864f624ac696f"
+    },
+    "divergences": [],
+    "items": [
+      {
+        "expected": {
+          "anomalies": 0,
+          "verdict": "pass"
+        },
+        "key": "contrast.N-09b",
+        "live": {
+          "anomalies": 0,
+          "verdict": "pass"
+        },
+        "status": "match"
+      },
+      {
+        "expected": "b08b4063023d6194d90d273ce343e1af",
+        "key": "set.md5",
+        "live": "b08b4063023d6194d90d273ce343e1af",
+        "status": "match"
+      },
+      {
+        "expected": 22,
+        "key": "summary.matched",
+        "live": 22,
+        "status": "match"
+      },
+      {
+        "expected": 1,
+        "key": "summary.mismatched",
+        "live": 1,
+        "status": "match"
+      },
+      {
+        "expected": 6,
+        "key": "summary.not_judgeable",
+        "live": 6,
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-01",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-02",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-03",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-04",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-05",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-06",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-07",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-08",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "attribution-only",
+        "key": "vector.N-09",
+        "live": "attribution-only",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-09b",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-10",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-11",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-12",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-13",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-14",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-15",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "NOT_JUDGEABLE",
+        "key": "vector.N-16",
+        "live": "NOT_JUDGEABLE",
+        "status": "match"
+      },
+      {
+        "expected": "NOT_JUDGEABLE",
+        "key": "vector.N-17",
+        "live": "NOT_JUDGEABLE",
+        "status": "match"
+      },
+      {
+        "expected": "NOT_JUDGEABLE",
+        "key": "vector.N-18",
+        "live": "NOT_JUDGEABLE",
+        "status": "match"
+      },
+      {
+        "expected": "NOT_JUDGEABLE",
+        "key": "vector.N-19",
+        "live": "NOT_JUDGEABLE",
+        "status": "match"
+      },
+      {
+        "expected": "NOT_JUDGEABLE",
+        "key": "vector.N-20",
+        "live": "NOT_JUDGEABLE",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.N-21",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "NOT_JUDGEABLE",
+        "key": "vector.N-22",
+        "live": "NOT_JUDGEABLE",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.P-01",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.P-02",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.P-03",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.P-04",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.P-05",
+        "live": "MATCH",
+        "status": "match"
+      },
+      {
+        "expected": "MATCH",
+        "key": "vector.P-06",
+        "live": "MATCH",
+        "status": "match"
+      }
+    ]
+  },
+  "schema": "aav-report/1",
+  "selection": {
+    "mode": "all",
+    "value": null
+  },
+  "set": {
+    "draft_version": "draft-ietf-wimse-http-signature-08",
+    "file": "vectors.json",
+    "md5": "b08b4063023d6194d90d273ce343e1af",
+    "set_version": "v4",
+    "sha256": "b64b753dc89c93f0ae809ed9bd575d6718ac00e5169a07302dedf28407329b07"
+  },
+  "summary": {
+    "contrast_fail": 0,
+    "contrast_pass": 1,
+    "matched": 22,
+    "mismatched": 1,
+    "not_judgeable": 6,
+    "readings": {
+      "MATCH": [
+        "P-01",
+        "P-02",
+        "P-03",
+        "P-04",
+        "P-05",
+        "P-06",
+        "N-01",
+        "N-02",
+        "N-03",
+        "N-04",
+        "N-05",
+        "N-06",
+        "N-07",
+        "N-08",
+        "N-09b",
+        "N-10",
+        "N-11",
+        "N-12",
+        "N-13",
+        "N-14",
+        "N-15",
+        "N-21"
+      ],
+      "NOT_JUDGEABLE": [
+        "N-16",
+        "N-17",
+        "N-18",
+        "N-19",
+        "N-20",
+        "N-22"
+      ],
+      "attribution-only": [
+        "N-09"
+      ]
+    },
+    "total": 29
+  },
+  "tool": {
+    "draft": "draft-ietf-wimse-http-signature-09",
+    "name": "agent-authorization-verifier",
+    "version": "0.1.0"
+  },
+  "vectors": [
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": null,
+            "failing_stage": null,
+            "verdict": "ACCEPT"
+          },
+          "expected": {
+            "outcome": "ACCEPT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "P-01",
+      "kind": "positive",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": null,
+            "failing_stage": null,
+            "verdict": "ACCEPT"
+          },
+          "expected": {
+            "outcome": "ACCEPT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "P-02",
+      "kind": "positive",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": null,
+            "failing_stage": null,
+            "verdict": "ACCEPT"
+          },
+          "expected": {
+            "outcome": "ACCEPT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "P-03",
+      "kind": "positive",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": null,
+            "failing_stage": null,
+            "verdict": "ACCEPT"
+          },
+          "expected": {
+            "outcome": "ACCEPT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "P-04",
+      "kind": "positive",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": null,
+            "failing_stage": null,
+            "verdict": "ACCEPT"
+          },
+          "expected": {
+            "outcome": "ACCEPT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "P-05",
+      "kind": "positive",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": null,
+            "failing_stage": null,
+            "verdict": "ACCEPT"
+          },
+          "expected": {
+            "outcome": "ACCEPT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "P-06",
+      "kind": "positive",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [
+              "CRYPTO"
+            ],
+            "failing_code": "E_COVERAGE_MISSING",
+            "failing_stage": "COVERAGE",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_COVERAGE_MISSING",
+            "failing_stage": "COVERAGE",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-01",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [
+              "BASE"
+            ],
+            "failing_code": "E_COVERAGE_FORBIDDEN",
+            "failing_stage": "COVERAGE",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_COVERAGE_FORBIDDEN",
+            "failing_stage": "COVERAGE",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-02",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [
+              "CRYPTO"
+            ],
+            "failing_code": "E_DIGEST_MISSING",
+            "failing_stage": "COVERAGE",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_DIGEST_MISSING",
+            "failing_stage": "COVERAGE",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-03",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_DIGEST_MISMATCH",
+            "failing_stage": "DIGEST",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [
+              "CRYPTO"
+            ],
+            "failing_code": "E_DIGEST_MISMATCH",
+            "failing_stage": "DIGEST",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-04",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [
+              "CRYPTO"
+            ],
+            "failing_code": "E_PARAM_MISSING",
+            "failing_stage": "PARAMS",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_PARAM_MISSING",
+            "failing_stage": "PARAMS",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-05",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_PARAM_FORBIDDEN",
+            "failing_stage": "PARAMS",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_PARAM_FORBIDDEN",
+            "failing_stage": "PARAMS",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-06",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_PARAM_FORBIDDEN",
+            "failing_stage": "PARAMS",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_PARAM_FORBIDDEN",
+            "failing_stage": "PARAMS",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-07",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_TAG_AMBIGUOUS",
+            "failing_stage": "SELECT",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_TAG_AMBIGUOUS",
+            "failing_stage": "SELECT",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-08",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [
+              "WINDOW"
+            ],
+            "failing_code": "E_WIT_EXP",
+            "failing_stage": "WIT",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_WINDOW_OUTSIDE",
+            "failing_stage": "WINDOW",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": false,
+          "verify_time": 1795003600
+        }
+      ],
+      "id": "N-09",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "attribution-only",
+      "status": "MISMATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": null,
+            "failing_stage": null,
+            "verdict": "ACCEPT"
+          },
+          "expected": {
+            "outcome": "ACCEPT"
+          },
+          "match": true,
+          "verify_time": 1795000300
+        },
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_WINDOW_OUTSIDE",
+            "failing_stage": "WINDOW",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_WINDOW_OUTSIDE",
+            "failing_stage": "WINDOW",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000301
+        }
+      ],
+      "id": "N-09b",
+      "kind": "negative-message",
+      "mode": "contrast",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_AUD_MISMATCH",
+            "failing_stage": "AUD",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_AUD_MISMATCH",
+            "failing_stage": "AUD",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-10",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_PARAM_MISSING",
+            "failing_stage": "PARAMS",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_PARAM_MISSING",
+            "failing_stage": "PARAMS",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-11",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_REQNONCE_MISSING",
+            "failing_stage": "PARAMS",
+            "verdict": "CLIENT_REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_REQNONCE_MISSING",
+            "failing_stage": "PARAMS",
+            "outcome": "CLIENT_REJECT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-12",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_REQNONCE_MISMATCH",
+            "failing_stage": "BINDING",
+            "verdict": "CLIENT_REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_REQNONCE_MISMATCH",
+            "failing_stage": "BINDING",
+            "outcome": "CLIENT_REJECT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-13",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_RESPONSE_UNSIGNED",
+            "failing_stage": "BINDING",
+            "verdict": "CLIENT_REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_RESPONSE_UNSIGNED",
+            "failing_stage": "BINDING",
+            "outcome": "CLIENT_REJECT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-14",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [],
+            "failing_code": "E_ALG_BINDING",
+            "failing_stage": "CRYPTO",
+            "verdict": "REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_ALG_BINDING",
+            "failing_stage": "CRYPTO",
+            "http_status": 400,
+            "outcome": "REJECT",
+            "problem_type": "wimse-signature-invalid"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-15",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "behavior probe, subject=sender: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ENTROPY if the probed behavior occurs)",
+      "evaluations": [],
+      "id": "N-16",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "reading": "NOT_JUDGEABLE",
+      "status": "NOT_JUDGEABLE"
+    },
+    {
+      "detail": "behavior probe, subject=server: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ERROR_SURFACE if the probed behavior occurs)",
+      "evaluations": [],
+      "id": "N-17",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "reading": "NOT_JUDGEABLE",
+      "status": "NOT_JUDGEABLE"
+    },
+    {
+      "detail": "behavior probe, subject=server: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_UNSIGNED_SUCCESS if the probed behavior occurs)",
+      "evaluations": [],
+      "id": "N-18",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "reading": "NOT_JUDGEABLE",
+      "status": "NOT_JUDGEABLE"
+    },
+    {
+      "detail": "behavior probe, subject=sender: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ACCEPT_SIG_WEAK if the probed behavior occurs)",
+      "evaluations": [],
+      "id": "N-19",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "reading": "NOT_JUDGEABLE",
+      "status": "NOT_JUDGEABLE"
+    },
+    {
+      "detail": "behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_PROCESS_ORDER if the probed behavior occurs)",
+      "evaluations": [],
+      "id": "N-20",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "reading": "NOT_JUDGEABLE",
+      "status": "NOT_JUDGEABLE"
+    },
+    {
+      "detail": "",
+      "evaluations": [
+        {
+          "actual": {
+            "cascades": [
+              "BASE"
+            ],
+            "failing_code": "E_COVERAGE_FORBIDDEN",
+            "failing_stage": "COVERAGE",
+            "verdict": "CLIENT_REJECT"
+          },
+          "expected": {
+            "cascades": [],
+            "failing_code": "E_COVERAGE_FORBIDDEN",
+            "failing_stage": "COVERAGE",
+            "outcome": "CLIENT_REJECT"
+          },
+          "match": true,
+          "verify_time": 1795000060
+        }
+      ],
+      "id": "N-21",
+      "kind": "negative-message",
+      "mode": "oracle",
+      "reading": "MATCH",
+      "status": "MATCH"
+    },
+    {
+      "detail": "behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_SELECTION_BY_LABEL if the probed behavior occurs)",
+      "evaluations": [],
+      "id": "N-22",
+      "kind": "negative-behavior",
+      "mode": "probe",
+      "reading": "NOT_JUDGEABLE",
+      "status": "NOT_JUDGEABLE"
+    }
+  ]
+}
