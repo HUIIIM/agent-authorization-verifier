@@ -1,0 +1,6 @@
+GET /gimme-ice-cream?flavor=vanilla HTTP/1.1
+Host: svcb.example.com
+Workload-Identity-Token: eyJhbGciOiJFZDI1NTE5Iiwia2lkIjoiaXNzdWVyLWtleSIsInR5cCI6IndpdCtqd3QifQ.eyJjbmYiOnsiandrIjp7ImFsZyI6IkVkMjU1MTkiLCJjcnYiOiJFZDI1NTE5Iiwia2lkIjoidmVjLWEta2V5Iiwia3R5IjoiT0tQIiwieCI6Ik8zT2ZWbVBKM3BlWWhkRHJNd2VOSWlCT1FVNkpaQ05jWU1LMmtqVjBpM1kifX0sImV4cCI6MTc5NTAwMzYwMCwiaWF0IjoxNzk0OTk5OTQwLCJpc3MiOiJodHRwczovL2V4YW1wbGUuY29tL2lzc3VlciIsImp0aSI6IndpdC1hLTE3OTUwMDAwMDAiLCJzdWIiOiJ3aW1zZTovL2V4YW1wbGUuY29tL3N2Y0EifQ.JCh9sN__1Al9xVB-K7CFafw1tDV8PCeZvyKdFyMmb9vvN4mK2ZGNbC6VLFpNzpVsgGBV0FwmzerDAFuikSJBCw
+Signature-Input: sig1=("@method" "@path" "@query" "workload-identity-token");created=1795000000;expires=1795000300;nonce="7f3a9c1e5b284d06a1f4e8c2b6d50937";tag="wimse-workload-to-workload";wimse-aud="https://svcb.example.com/gimme-ice-cream/";wimse-sign-response
+Signature: sig1=:ZnDIV3jqnC9/LL+DLU4PTu3fKo0FfgnKOPhg4fBMaQwEt6S2nl/8jEdezEkoCT67KXcSvNMmyfWt/KjKilasCQ==:
+

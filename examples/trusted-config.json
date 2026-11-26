@@ -1,0 +1,73 @@
+{
+  "trusted_audiences": [
+    "https://svcb.example.com/gimme-ice-cream",
+    "https://svcb.example.com/inventory/cones",
+    "https://svcb.example.com/status",
+    "https://svcb.example.com"
+  ],
+  "issuer_anchor_jwk": {
+    "alg": "Ed25519",
+    "crv": "Ed25519",
+    "kid": "issuer-key",
+    "kty": "OKP",
+    "x": "QH_Zu0pnwyO8xdFQm9upOUFAbpb4nhMrGc29L3uJXDA"
+  },
+  "known_keys": [
+    {
+      "name": "issuer",
+      "alg": "Ed25519",
+      "public_jwk": {
+        "alg": "Ed25519",
+        "crv": "Ed25519",
+        "kid": "issuer-key",
+        "kty": "OKP",
+        "x": "QH_Zu0pnwyO8xdFQm9upOUFAbpb4nhMrGc29L3uJXDA"
+      }
+    },
+    {
+      "name": "svcA",
+      "alg": "Ed25519",
+      "public_jwk": {
+        "alg": "Ed25519",
+        "crv": "Ed25519",
+        "kid": "vec-a-key",
+        "kty": "OKP",
+        "x": "O3OfVmPJ3peYhdDrMweNIiBOQU6JZCNcYMK2kjV0i3Y"
+      }
+    },
+    {
+      "name": "svcB",
+      "alg": "Ed25519",
+      "public_jwk": {
+        "alg": "Ed25519",
+        "crv": "Ed25519",
+        "kid": "vec-b-key",
+        "kty": "OKP",
+        "x": "4jVAzgEPO5n-6jujSiyQME5t-tIzZApbhR5cTPoedII"
+      }
+    },
+    {
+      "name": "svcC",
+      "alg": "ES256",
+      "public_jwk": {
+        "alg": "ES256",
+        "crv": "P-256",
+        "kid": "vec-c-key",
+        "kty": "EC",
+        "x": "jZjfUBQgD1l9R_lm4nzo1rP82pGVDBxHD6YmOo_xoCo",
+        "y": "CBGv9b8hB-l0mov9rlu223g-vNE_SquCC2IhPi2IweE"
+      }
+    },
+    {
+      "name": "other",
+      "alg": "Ed25519",
+      "public_jwk": {
+        "alg": "Ed25519",
+        "crv": "Ed25519",
+        "kid": "other-key",
+        "kty": "OKP",
+        "x": "Lo6grJBjN252d2huS1-ckJIql2FZR2vrTOF2qKRBTm4"
+      }
+    }
+  ]
+}
