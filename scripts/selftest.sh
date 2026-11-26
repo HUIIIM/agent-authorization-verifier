@@ -9,6 +9,11 @@
 #   3. the canonical report generated twice per format; the two files'
 #      SHA-256 fingerprints must be equal
 #   4. the W5 selfcheck: python selfcheck/run_selfcheck.py (must exit 0)
+#   5. the CI gate rehearsal: scripts/ci_gate.sh, the exact script the
+#      merge-gate workflow runs (run --all + regen self-check)
+#   6. the README check: scripts/check_readme.py runs every README
+#      command literally in a fresh clone (skipped, and said so, when this
+#      selftest is itself being run by that check)
 # Outputs land in build/selftest/ (git-ignored). Set PYTHON to choose the
 # interpreter used to create the venv (default python3).
 set -euo pipefail
@@ -69,5 +74,15 @@ done
 
 step "4. W5 selfcheck"
 $PY selfcheck/run_selfcheck.py
+
+step "5. CI gate rehearsal (scripts/ci_gate.sh, as the merge-gate workflow runs it)"
+PY="$PY" bash scripts/ci_gate.sh
+
+step "6. README commands, run literally in a clean clone"
+if [ "${AAV_README_CHECK_NESTED:-}" = 1 ]; then
+  echo "skipped: this selftest is itself running inside scripts/check_readme.py"
+else
+  $PY scripts/check_readme.py
+fi
 
 step "SELFTEST PASS"

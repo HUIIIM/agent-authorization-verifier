@@ -1,0 +1,52 @@
+clean clone of 66868c8a678d + 1 uncommitted tracked change(s) at /tmp/aav-readme-check-hzydxzyu/clone
+ok   README.md:74 [bash] exit 0 (want 0); expect 0/0: python3 -m venv .venv
+ok   README.md:79 [bash] exit 0 (want 0); expect 0/0: . .venv/bin/activate
+ok   README.md:84 [bash] exit 0 (want 0); expect 2/2: python -m pip install -e ".[dev]"
+ok   README.md:96 [python] exit 0 (want 0); expect 3/3: import json
+ok   README.md:129 [bash] exit 0 (want 0); expect 2/2: aav verify --message examples/p-01-request.http --config examples/trusted-config.json --ti
+ok   README.md:136 [bash] exit 1 (want 1); expect 2/2: aav verify --message examples/n-10-request.http --config examples/trusted-config.json --ti
+ok   README.md:143 [bash] exit 0 (want 0); expect 2/2: aav verify --message examples/p-01-request.http --config examples/trusted-config.json --ti
+ok   README.md:161 [bash] exit 1 (want 1); expect 1/1: aav run-vectors --set tests/fixtures/vectors.json
+FAIL README.md:172 [bash] exit 0 (want 0); expect 1/2: aav run --all --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --baselin
+     missing in output: 'baseline: 3 divergences'
+     --- output tail ---
+     N-13   MATCH
+            t=1795000060: expected CLIENT_REJECT BINDING/E_REQNONCE_MISMATCH, got CLIENT_REJECT BINDING/E_REQNONCE_MISMATCH -> match
+     N-14   MATCH
+            t=1795000060: expected CLIENT_REJECT BINDING/E_RESPONSE_UNSIGNED, got CLIENT_REJECT BINDING/E_RESPONSE_UNSIGNED -> match
+     N-15   MATCH
+            t=1795000060: expected REJECT CRYPTO/E_ALG_BINDING, got REJECT CRYPTO/E_ALG_BINDING -> match
+     N-16   NOT_JUDGEABLE  -- behavior probe, subject=sender: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ENTROPY if the probed behavior occurs)
+     N-17   NOT_JUDGEABLE  -- behavior probe, subject=server: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ERROR_SURFACE if the probed behavior occurs)
+     N-18   NOT_JUDGEABLE  -- behavior probe, subject=server: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_UNSIGNED_SUCCESS if the probed behavior occurs)
+     N-19   NOT_JUDGEABLE  -- behavior probe, subject=sender: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_ACCEPT_SIG_WEAK if the probed behavior occurs)
+     N-20   NOT_JUDGEABLE  -- behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_PROCESS_ORDER if the probed behavior occurs)
+     N-21   MATCH
+            t=1795000060: expected CLIENT_REJECT COVERAGE/E_COVERAGE_FORBIDDEN, got CLIENT_REJECT COVERAGE/E_COVERAGE_FORBIDDEN (cascades: BASE) -> match
+     N-22   NOT_JUDGEABLE  -- behavior probe, subject=verifier: an artifact verifier cannot judge implementation behavior (expected NONCONFORMANT/E_SELECTION_BY_LABEL if the probed behavior occurs)
+     contrast N-09b (v4/n-09b.json): pass; anomalies: none
+            step 1     pass | pass
+            step 1b    pass | pass
+            step 1c    pass | pass
+            step 2     pass | pass
+            step 3     pass | pass
+            step 4     pass | pass
+            step 5     pass | fail
+            step final ACCEPT | REJECT
+     summary: 22 matched, 1 mismatched, 6 not judgeable by an artifact verifier (set v4, draft-ietf-wimse-http-signature-08); selection all
+     baseline: no divergences
+ok   README.md:179 [bash] exit 0 (want 0); expect 2/2: aav run --id N-09b --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json --ba
+ok   README.md:186 [bash] exit 0 (want 0); expect 2/2: aav run --class positive --set tests/fixtures/vectors.json --baseline baselines/s01-v4.jso
+ok   README.md:193 [bash] exit 1 (want 1); expect 1/1: aav run --all --set tests/fixtures/vectors.json
+ok   README.md:200 [bash] exit 2 (want 2); expect 1/1: aav run --id X-99 --set tests/fixtures/vectors.json
+ok   README.md:221 [bash] exit 0 (want 0); expect 2/2: aav report --format md --set tests/fixtures/vectors.json --contrast vectors/v4/n-09b.json 
+ok   README.md:238 [bash] exit 0 (want 0); expect 1/1: aav report --format json --canonical --set tests/fixtures/vectors.json --contrast vectors/
+ok   README.md:243 [bash] exit 0 (want 0); expect 1/1: sha256sum reports/s01-v4-canonical.json
+ok   README.md:252 [bash] exit 0 (want 0); expect 1/1: python -m pytest -q
+ok   README.md:257 [bash] exit 0 (want 0); expect 1/1: ruff check src tests
+ok   README.md:262 [bash] exit 0 (want 0); expect 1/1: ruff format --check src tests
+ok   README.md:280 [bash] exit 0 (want 0); expect 3/3: bash scripts/ci_gate.sh
+ok   README.md:295 [bash] exit 0 (want 0); expect 3/3: bash scripts/selftest.sh
+ok   README.md:303 [bash] exit 0 (want 0); expect 1/1: python scripts/check_readme.py --list
+README check: 21/22 blocks as stated
+clone and logs kept at /tmp/aav-readme-check-hzydxzyu
