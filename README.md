@@ -60,7 +60,32 @@ aav verify --message request.txt [--paired request.txt] \
 
 # Run a published test vector set end to end
 aav run-vectors --set vectors.json [--json]
+
+# Run a selection (design section 4.2): all, one vector, or one class
+aav run --all --set tests/fixtures/vectors.json \
+    --contrast vectors/v4/n-09b.json --baseline baselines/s01-v4.json
+aav run --id N-09b --set ...        # one vector by id
+aav run --class positive --set ...  # positive | negative-message | negative-behavior
+
+# Reports (design section 4.3): one model, rendered as JSON or Markdown
+aav report --format json|md --set ... [--all|--id ID|--class CLASS] \
+    [--clock system|@UNIX|ISO8601] [--canonical] [--out PATH]
 ```
+
+`run` exit status: with `--baseline`, 0 when every live reading equals the
+recorded baseline (`baselines/s01-v4.json`) and 1 when any reading
+diverges; without it, 0 only when every judgeable vector matches its
+published expectation (so N-09's documented divergence exits 1, as
+`run-vectors` does). An unknown id or class exits 2. `--contrast FILE`
+also runs that contrast vector through the contrast engine (stepwise
+table, CONTRAST_ANOMALY check) when its vector is selected.
+
+`report` builds one plain-data model and renders it as either format, so
+JSON and Markdown cannot drift. The only timestamp, `meta.generated_at`,
+comes from the injected clock; the judgment path reads no clock at all
+(time enters only as each evaluation's `verify_time`). `--canonical`
+drops the `meta` envelope and normalizes key order and collection order,
+so two runs over the same vector set give byte-identical files.
 
 The trusted config file is JSON: `{"trusted_audiences": [...],
 "issuer_anchor_jwk": {...}}`, with an optional `known_keys` list that only
@@ -129,6 +154,14 @@ Deliberately out of scope for this first cut, by design:
 pip install -e ".[dev]"
 python -m pytest        # unit tests + the full suite v4 run
 ruff check src tests
+```
+
+One command runs the whole self-test from a fresh clone (venv setup,
+tests, lint, every `run`/`report` form, the dual canonical-report
+fingerprint check, and the W5 `python selfcheck/run_selfcheck.py`):
+
+```console
+bash scripts/selftest.sh
 ```
 
 ## Licensing

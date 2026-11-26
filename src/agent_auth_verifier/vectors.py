@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -355,14 +356,20 @@ def _target_member(sig_input: dict[str, SFMember], mutation: dict) -> SFInnerLis
 # -- suite execution ----------------------------------------------------------
 
 
-def run_vector_set(vector_set: VectorSet) -> list[VectorOutcome]:
+def run_vector_set(vector_set: VectorSet, ids: Iterable[str] | None = None) -> list[VectorOutcome]:
     """Run every vector in the set through the verifier and compare against
     the published expectations (outcome, and for rejections the failing
-    stage and code). Behavior probes are reported NOT_JUDGEABLE."""
+    stage and code). Behavior probes are reported NOT_JUDGEABLE.
+
+    ``ids`` restricts which vectors are executed (selection only: the
+    judgment of each executed vector is unchanged)."""
+    wanted = None if ids is None else set(ids)
     verifier = vector_set.make_verifier()
     outcomes: list[VectorOutcome] = []
     for vec in vector_set.data["vectors"]:
         vector_id = str(vec["id"])
+        if wanted is not None and vector_id not in wanted:
+            continue
         if vec.get("mode") == "probe" or vec.get("kind") == "negative-behavior":
             expect = vec.get("expect") or {}
             outcomes.append(
