@@ -480,8 +480,14 @@ def _table(checks: list[Check]) -> list[str]:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--date", help="report date (default: today, UTC)")
+    ap.add_argument(
+        "--series",
+        help="file the report in this date's revision series (selfcheck-<series>-r<N>.md); "
+        "the Date line still records the actual run date",
+    )
     args = ap.parse_args(argv)
     date = args.date or dt.datetime.now(dt.UTC).date().isoformat()
+    series = args.series or date
 
     data = json.loads(VECTORS.read_text())
     vs = VectorSet.load(VECTORS)
@@ -498,7 +504,7 @@ def main(argv: list[str] | None = None) -> int:
     ]
     divergent = [r for r in readings if r[1] != r[2]]
 
-    path, rev = _next_report_path(date)
+    path, rev = _next_report_path(series)
     head = _git("rev-parse", "HEAD")
     dirty = bool(_git("status", "--porcelain", "--", "src", "tests", "vectors"))
     import cryptography
@@ -506,11 +512,14 @@ def main(argv: list[str] | None = None) -> int:
     _, ruff_v = _run(["ruff", "--version"])
     _, pytest_v = _run([sys.executable, "-m", "pytest", "--version"])
     lines = [
-        f"# Self-check report {date} r{rev}",
+        f"# Self-check report {series} r{rev}",
         "",
         (
-            f"Date: {date}. Revision r{rev} of this date. Produced by "
-            "`python selfcheck/run_selfcheck.py`; every reading below was taken live by that run."
+            f"Date: {date}. Revision r{rev} of the {series} series"
+            + (f" (run on {date}, filed in the {series} series)" if series != date else "")
+            + ". Produced by `python selfcheck/run_selfcheck.py"
+            + (f" --series {series}" if series != date else "")
+            + "`; every reading below was taken live by that run."
         ),
         "",
         f"Code under test: commit `{head}`"
