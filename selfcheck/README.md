@@ -16,7 +16,9 @@ python selfcheck/run_selfcheck.py
 `src/` is put on the path automatically; no install is needed. Each run
 writes a new report, `reports/selfcheck-<YYYY-MM-DD>-r<N>.md`. `N` counts
 up per date, so earlier reports are never overwritten. Pass `--date` to
-set the date stamp yourself.
+set the date stamp yourself. Pass `--series <YYYY-MM-DD>` to file the report in an
+earlier date's revision series; the report's Date line still records the
+actual run date.
 
 Exit code: `0` everything passes; `2` nothing failed but at least one
 check was blocked (its inputs are missing); `1` something failed, or a
